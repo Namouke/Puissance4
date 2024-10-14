@@ -1,4 +1,5 @@
-html,body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -17,12 +18,12 @@ body {
 
 :root {
     --background-color: #f5f5f5;
-    --frame-board : #8A5D38;
-    --board-color : #F2DEAA;
-    --player-one-color : #D3140E;
-    --player-two-color : #F89B10;
-    --frame-player-pawn : #442509;
-    --background-color-setup : #93633F;
+    --frame-board: #8A5D38;
+    --board-color: #F2DEAA;
+    --player-one-color: #D3140E;
+    --player-two-color: #F89B10;
+    --frame-player-pawn: #442509;
+    --background-color-setup: #93633F;
 }
 
 .header {
@@ -46,7 +47,7 @@ body {
 .board {
     display: flex;
     flex-direction: column;
-    background-color: var(--frame-board); 
+    background-color: var(--frame-board);
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -61,15 +62,20 @@ body {
 .cell {
     width: 50px;
     height: 50px;
-    background-color: var(--board-color); 
+    background-color: var(--board-color);
     border-radius: 50%;
-    border: 2px solid var(--frame-player-pawn); 
+    border: 2px solid var(--frame-player-pawn);
+    transition: background-color 0.3s ease;
 }
 
 .cell.red {
-    background-color: var(--player-one-color); 
+    background-color: var(--player-one-color);
 }
 
 .cell.yellow {
-    background-color: var(--player-two-color); 
+    background-color: var(--player-two-color);
+}
+
+.resetButton:hover {
+    background-color: #744f2e;
 }
