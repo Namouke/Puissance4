@@ -2,9 +2,34 @@ const boardElement = document.querySelector('.board');
 const rows = 6;
 const cols = 7;
 let currentPlayer = 'red';
+let gamesPlayed = 0;
+let currentPieces = 0;
+
+// Scoreboard
+
+const currentTurnDisplay = document.getElementById('currentTurn');
+const gamesPlayedDisplay = document.getElementById('gamesPlayed');
+
+
+function updateScoreboard() {
+    if (currentPlayer === 'red') {
+        currentTurnDisplay.textContent = "Tour du joueur : Rouge";
+    } else {
+        currentTurnDisplay.textContent = "Tour du joueur : Jaune";
+    }
+}
+
+function updateGamesPlayed() {
+    gamesPlayedDisplay.textContent = `Parties jouées : ${gamesPlayed}`;
+}
+
+function updatePieceCount() {
+    document.getElementById('currentPieces').textContent = `Pions actuellement joués : ${currentPieces}`;
+}
 
 
 function createBoard() {
+    boardElement.innerHTML = ''; // Vider le plateau si nécessaire
     for (let row = 0; row < rows; row++) {
         const rowElement = document.createElement('div');
         rowElement.classList.add('row');
@@ -17,7 +42,21 @@ function createBoard() {
         }
         boardElement.appendChild(rowElement);
     }
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.addEventListener('click', () => addPawn(cell));
+    });
 }
+
+function resetGame() {
+    currentPlayer = 'red';
+    currentPieces = 0;
+    createBoard();
+    updateScoreboard();
+    updatePieceCount();
+}
+
+
 
 function addPawn(cell) {
     const col = cell.dataset.col;
@@ -28,17 +67,17 @@ function addPawn(cell) {
         if (!cellsInColumn[i].classList.contains('red') && !cellsInColumn[i].classList.contains('yellow')) {
             cellsInColumn[i].classList.add(currentPlayer);
 
+            currentPieces++;
+            updatePieceCount();
+
             const previousPlayer = currentPlayer;
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
 
-            setTimeout(() => {
-                if (winCondtion()) {
-                    winnerIs(previousPlayer);
-                }
-            }, 200);
+            updateScoreboard();
 
-
-
+            if (winCondtion()) {
+                winnerIs(previousPlayer);
+            }
             break;
         }
     }
@@ -46,7 +85,6 @@ function addPawn(cell) {
 
 
 function checkWinDirection(row, col, rowDir, colDir) {
-    let count = 0;
     let currentColor = null;
 
     for (let i = 0; i < 4; i++) {
@@ -76,36 +114,36 @@ function winCondtion() {
 
     for (let row = 0; row < rows; row++) { // colonnes
         for (let col = 0; col < cols; col++) {
-            // const cells = document.querySelector(`.cell[data-col='${col}'][data-row='${row}']`);
-            // savoir la couleur
-            // savoir si elle suit la couleur d'avant
-            // wincondition si 4 a la suite.
-            if (checkWinDirection(row, col, 0, 1)) return winnerIs(row, col); // de gauche a droite
-            if (checkWinDirection(row, col, 1, 0)) return winnerIs(row, col); // de haut en bas
-            if (checkWinDirection(row, col, 1, 1)) return winnerIs(row, col); // diagonal vers le bas a droite
-            if (checkWinDirection(row, col, -1, 1)) return winnerIs(row, col); // diagonal vers le haut à droite
+            if (checkWinDirection(row, col, 0, 1)) return true; // de gauche a droite
+            if (checkWinDirection(row, col, 1, 0)) return true; // de haut en bas
+            if (checkWinDirection(row, col, 1, 1)) return true; // diagonal vers le bas a droite
+            if (checkWinDirection(row, col, -1, 1)) return true; // diagonal vers le haut à droite
         }
     }
+    return false;
 }
 
-function winnerIs(row, col) {
-    const winningPlayer = document.querySelector(`.cell[data-row='${row}'][data-col='${col}']`).classList.contains('red') ? 'Rouge' : 'Jaune';
-    alert(`${winningPlayer} a gagné !`)
+function winnerIs(previousPlayer) {
+    const winningPlayer = previousPlayer === 'red' ? 'Rouge' : 'Jaune';
+    setTimeout(() => {
+        alert(`${winningPlayer} a gagné !`)
+
+        gamesPlayed++;
+        updateGamesPlayed();
+
+        resetGame();
+    }, 200)
 }
 createBoard();
-
-
-
-const cells = document.querySelectorAll('.cell');
-cells.forEach(cell => {
-    cell.addEventListener('click', () => addPawn(cell));
-});
-
+updateScoreboard();
+updateGamesPlayed();
 
 
 // Bouton refresh. 
 
 const resetButton = document.querySelector('.resetButton');
 resetButton.addEventListener('click', () => {
-    location.reload();
+    resetGame();
 });
+
+

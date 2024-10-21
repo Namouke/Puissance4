@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +8,29 @@
     <link rel="stylesheet" href="/style.css">
     <title>Puissance 4</title>
 </head>
+
 <body>
 
     <header class="header">Le Puissance 4</header>
 
-    <div class="board"></div>
-    
+    <section class="container">
+
+        <div class="board"></div>
+
+        <div class="scoreboard">
+            <p id="currentTurn">Tour du joueaur : Rouge</p>
+            <p id="gamesPlayed">Parties jouées : 0</p>
+            <p id="currentPieces">Pions actuellement joués : 0</p>
+        </div>
+
+    </section>
+
+
+
     <button class="resetButton">Relancez</button>
 
-    
+
     <script src="/index.js"></script>
 </body>
+
 </html>

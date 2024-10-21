@@ -26,6 +26,8 @@ body {
     --background-color-setup: #93633F;
 }
 
+/*  header */
+
 .header {
     background-color: var(--background-color-setup);
     color: white;
@@ -35,13 +37,13 @@ body {
     margin-bottom: 20px;
 }
 
-.resetButton {
-    background-color: var(--background-color-setup);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+
+/* *** Le puissance 4 *** */
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .board {
@@ -51,7 +53,15 @@ body {
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 20px;
+    flex: 3;
+    margin-right: 20px;
 }
+
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+}
+
 
 .row {
     display: flex;
@@ -74,6 +84,18 @@ body {
 
 .cell.yellow {
     background-color: var(--player-two-color);
+}
+
+
+/* Relancez */
+
+.resetButton {
+    background-color: var(--background-color-setup);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .resetButton:hover {
